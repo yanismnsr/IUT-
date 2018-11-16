@@ -27,4 +27,8 @@ a=$(cat /usr/share/dict/french | grep 'cool')
 
 
 #### script permettant d'afficher chaque mot comportant les caractères "cool", avec a chaque fois devant "ce mot là est cool :" ... suivi du mot en question
-for i in grep 
+a=$(grep 'cool' /usr/share/dict/french)
+
+for i in $a; do
+    echo "ce mot la est cool : $i"
+done

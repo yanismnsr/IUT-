@@ -1,0 +1,32 @@
+- la programmation en assembleur peut avoir un avantage quand on gérer les noyaux pour mieux gérer les périphériques
+- macros : define + include 
+
+
+
+- le systeme d'exploitation dispose d'une machine virtuelle qui execute (interprète) les codes sources sans les faire passer par le systeme 
+ex de machine virtuelle : le logiciel java, python, c, bash ...
+
+- entre le code source et la machine virtuelle il existe un bytecode 
+le bytecode est une transformation du code source qui n'est pas lisible par nous, mais lisible par la machine virtuelle 
+
+
+
+#include <unistd.h>
+
+char *str = "bonjour\n";
+
+int main(){
+    write(1,str,8);
+    return (0);
+}
+
+
+ce programme est sauvegardé dans un fichier hello.c
+cpp hello.c -o hello_sans_macros.c : cette commande (C PreProcessor) permet d'avoir un fichier sans les macro car le preprocesseur les aura traité 
+cc -o hello.s -S hello_sans_macros.c : cette commande (gcc GNU C and C++ Compiler) permet d'avoir un fichier compilé en langage assembleur 
+as -o hello.o hello.s : cette commande (GNU assembler) permet d'avoir un objet (.o) à partir d'un fichier en langage assembleur
+ld -o hello -lc --entry main hello.o : cette commande permet de lier (the GNU linker) les fichiers pour former un executable
+
+
+
+

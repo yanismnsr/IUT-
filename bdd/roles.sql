@@ -31,7 +31,31 @@ create or replace function get (out num int, out expe name, out quand timestamp,
         exit when not found;
         return next;
       end loop;
-      return;
       close mail;
+      return;
     end;
   $$ language plpgsql SECURITY DEFINER;
+
+
+create or replace function l(out base varchar, out owner varchar, out privileges text) returns setof record as
+  $$
+    declare
+      based cursor for
+        select datname, pg_catalog.pg_get_userbyid(datdba), datacl from pg_database;
+    begin
+      open based;
+      loop
+        fetch based into base, owner, privileges ;
+        exit when not found;
+        return next;
+      end loop;
+      close based;
+      return;
+    end;
+  $$ language plpgsql;
+
+
+create or replace function l2(out base varchar, out owner varchar, out privileges text) returns setof record as
+  $$
+    select datname::varchar, pg_catalog.pg_get_userbyid(datdba)::varchar, datacl::text from pg_database;
+  $$ language sql;
